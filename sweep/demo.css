@@ -1,0 +1,148 @@
+*{
+    margin:0;
+    padding:0;
+}
+.wrapper {
+    width:100%;
+    height:1000px;
+    position: fixed;
+    top:0;
+    left:0;
+    background-image: url('img/bg.jpg');
+    background-size: 100% 100%;
+}
+
+.btn{
+    height:140px;
+    width:170px;
+    position:absolute;
+    left:50px;
+    background-image: url('img/startGame.png');
+    background-size: 100% 100%;
+    cursor: pointer;
+}
+.select{
+    width: 180px;
+    height: 400px;
+    position: absolute;
+    top:100px;
+    left: 40px;
+    /* background-image: url('img/cao.jpg') */
+    box-shadow: 0px 0px 10px rgba(0,0,0);
+}
+
+.select div {
+    color: black;
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 1px solid brown;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.box{
+    height:500px;
+    width:500px;
+    transform: perspective(1000px) rotateX(60deg);
+    margin:10px auto;
+    border-top:1px solid #B25F27;
+    border-left:1px solid #B25F27;
+    box-shadow:  5px 5px 5px rgba(0,0,0,0.3);
+    display:none;
+}
+
+.flagBox{
+    position:absolute;
+    top:50px;
+    left:60%;
+    width:300px;
+    height:50px;
+    margin-left:-100px;
+    color:#333;
+    font-size:30px;
+    font-weight: bolder;
+    display:none;
+}
+#score,#times{
+    color: red;
+}
+#times{
+    border: none;
+    width: 50px;
+    height: 30px;
+    position: relative;
+    top:-6px;
+    left: 0px;
+    text-indent: 0.5em;
+}
+.time{
+    position: absolute;
+    top:50px;
+    left: 30%;
+    font-size: 30px;
+}
+.alertBox{
+    display:none;
+    /* border: 1px solid rebeccapurple; */
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.alertImg{
+    /* background: red; */
+    width:600px;
+    height:400px;
+    background-size: 100% 100%;
+    position:absolute;
+    left:415px;
+    top:200px;
+    margin:auto;
+    border-radius: 20px;
+}
+
+.close{
+    position:absolute;
+    right:0;
+    top:0;
+    height:40px;
+    width:40px;
+    background-image: url('img/closeBtn.png');
+    background-size: 100% 100%;
+    cursor: pointer;
+
+}
+
+.block{
+    width:49px;
+    height:49px;
+    border-right:1px solid #B25F27;
+    border-bottom:1px solid #B25F27;
+    box-shadow: 0 0 4px #333 inset;
+    background-image: url('img/cao.jpg');
+    float: left;
+}
+
+.show{
+    background-image: url('img/dilei.jpg');
+    background-size: 100% 100%;
+}
+
+.num{
+    background:#ECD0A1;
+    font-size:18px;
+    font-weight:bold;
+    line-height: 49px;
+    text-align: center;
+}
+.flag{
+    background-image:url('img/hongqi.jpg');
+    background-size:100% 100%;
+}
