@@ -1,3 +1,15 @@
+// 点击开始游戏，随机出现食物和🐍，
+// 吃到食物 ? +1
+// 控制运动
+// 撞墙 ？ over
+
+/**
+ * core：使用数组snakeBody来表示蛇，第一位表示蛇头其他均为蛇身，循环snakeBody来创建蛇，
+ * move函数来使蛇移动，蛇移动的时候蛇身上该节的位置等于上一次的位置，蛇默认的移动方向为right，
+ * 如果向right移动就不能点击左或右按钮，蛇运动的时候先清除之前创建的蛇再根据新的snakeBody创建蛇
+ * 
+ */
+
 var snakeMove;
 var startGameBool = true;
 var startPauseBool = true;
@@ -14,7 +26,7 @@ var startPage = document.getElementById('startPage');
 init();
 function init() {
     //地图属性
-    this.mapW = parseInt(window.getComputedStyle(content).width);
+    this.mapW = parseInt(window.getComputedStyle(content).width); // 取得宽度，宽度在调整页面大小时会变化
     this.mapH = parseInt(window.getComputedStyle(content).height);
     this.mapDiv = content;
     //食物属性
@@ -27,9 +39,9 @@ function init() {
     this.snake;
     this.snakeW = 20;
     this.snakeH = 20;
-    this.snakeBody = [[3, 0, 'head'], [2, 0, 'body'], [1, 0, 'body']];
+    this.snakeBody = [[3, 0, 'head'], [2, 0, 'body'], [1, 0, 'body']]; // 使用数组来表示🐍
     //游戏属性
-    this.direct = 'right';
+    this.direct = 'right'; // 当前蛇前进的方向
     this.left = false;
     this.right = false;
     this.up = true;
@@ -47,12 +59,12 @@ function startGame() {
     snake();
 }
 
-function food() {
+function food() { // 生成食物
     var food = document.createElement('div');
-    food.style.width = this.foodW + 'px';
+    food.style.width = this.foodW + 'px'; // 宽
     food.style.height = this.foodH + 'px';
     food.style.borderRadius = '50%';
-    this.foodX = Math.floor(Math.random() * (this.mapW / this.foodW));
+    this.foodX = Math.floor(Math.random() * (this.mapW / this.foodW)); // 随机生成位置
     this.foodY = Math.floor(Math.random() * (this.mapH / this.foodH));
     
     food.style.left = this.foodX * this.foodW + 'px';
@@ -61,8 +73,8 @@ function food() {
     food.style.position = 'absolute';
     this.mapDiv.appendChild(food).setAttribute('class', 'food');
 }
-function snake() {
-    for (var i = 0; i < this.snakeBody.length; i++) {
+function snake() { // 生成🐍
+    for (var i = 0; i < this.snakeBody.length; i++) { // 根据snakeBody生成蛇
        var snake = document.createElement('div');
         snake.style.width = this.snakeW + 'px';
         snake.style.height = this.snakeH + 'px';
@@ -70,9 +82,9 @@ function snake() {
         snake.style.position = 'absolute';
         snake.style.left = this.snakeBody[i][0] * 20 + 'px';
         snake.style.top = this.snakeBody[i][1] * 20 + 'px';
-        snake.classList.add(this.snakeBody[i][2]);
+        snake.classList.add(this.snakeBody[i][2]); // 判断是蛇身还是蛇头
         this.mapDiv.appendChild(snake).classList.add('snake');   
-        switch (this.direct) {
+        switch (this.direct) { // 旋转蛇头
             case 'right':
                 break;
             case 'up':
@@ -89,10 +101,10 @@ function snake() {
         }
     }
 }
-function move() {
+function move() { // 运动
     //蛇身位置
     for (var i = this.snakeBody.length - 1; i > 0; i--) {
-        this.snakeBody[i][0] = this.snakeBody[i - 1][0];
+        this.snakeBody[i][0] = this.snakeBody[i - 1][0]; // 蛇的每一节的位置等于蛇的前一节的位置
         this.snakeBody[i][1] = this.snakeBody[i - 1][1];
     }
     //蛇头位置
@@ -162,10 +174,10 @@ function move() {
     }
 }
 
-function setDerict(code) {
+function setDerict(code) { // 设置方向
     switch (code) {
         case 37:
-            if (this.left) {
+            if (this.left) { // 判断能不能向左运动，比如蛇是向左或者向右就不能点击向左运动
                 this.direct = 'left';
                 this.left = false;
                 this.right = false;
@@ -206,7 +218,7 @@ function setDerict(code) {
 
 }
 
-function reloadGame() {
+function reloadGame() { 
     removeClass('snake');
     removeClass('food');
     clearInterval(snakeMove);
@@ -225,7 +237,7 @@ function reloadGame() {
     scoreBox.innerHTML = this.score;
 }
 
-function removeClass(calssName) {
+function removeClass(calssName) { // 删除之前的蛇 
     var ele = document.getElementsByClassName(calssName);
     while (ele.length > 0) {
         ele[0].parentNode.removeChild(ele[0]);
