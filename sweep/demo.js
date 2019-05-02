@@ -3,6 +3,12 @@
 //           有累 --》game Over
 //rightClick 没有标记并且没有数字--》进行标记。 有标记 --》取消标记 --》标记是否正确，10个都正确标记，提示成功
 //已经出现数字--》无效果
+/**
+ * core: 
+ * 1.左点击，判断是否点击到雷 ? 游戏结束 : 显示周围的雷数
+ * 周围雷数为0 ? 扩散 : 不扩散
+ * 2.右点击，判断是否点击到雷 ? 剩余雷数-1 : null
+ */
 
 
 var startBtn = document.getElementById('btn');
@@ -22,7 +28,7 @@ var mineOver =20;
 var row = 10;//行
 var col = 10;//列
 var block;
-var mineMap = [];
+var mineMap = []; // 存放雷
 var startGameBool = true;
 var div1Bool = true;
 var div2Bool = true;
@@ -140,7 +146,7 @@ function bindEvent() {
 function toDub(n){
     return n<10?"0"+n:""+n;
 }
-function init() {
+function init() { // 生成雷
     // minesNum = 10;
     // mineOver = 10;
     score.innerHTML = mineOver;
@@ -155,7 +161,7 @@ function init() {
         }
     }
     block = document.getElementsByClassName('block');
-    while (minesNum) {
+    while (minesNum) { // 判断是否重复
         var mineIndex = Math.floor(Math.random() * square);
         if (mineMap[mineIndex].mine === 0) {
             mineMap[mineIndex].mine = 1;
@@ -185,6 +191,12 @@ function leftClick(dom) {
         var posX = posArr && +posArr[0];
         var posY = posArr && +posArr[1];
         dom && dom.classList.add('num');
+        /**
+         * 判断周围八个区域
+         * [i-1,j-1]  [i-1,j]  [i-1, j+1]
+         * [i,j-1]    [i,j]    [i,j+1]
+         * [i+1,j-1]  [i+1,j]  [i+1,j+1]
+         */
         for (var i = posX - 1; i <= posX + 1; i++) {
             for (var j = posY - 1; j <= posY + 1; j++) {
                 var aroundBox = document.getElementById(i + '-' + j);
@@ -194,14 +206,14 @@ function leftClick(dom) {
             }
         }
         dom && (dom.innerHTML = n);
-        if (n == 0) {
+        if (n == 0) { // 如果周围没有雷就扩散
             for (var i = posX - 1; i <= posX + 1; i++) {
                 for (var j = posY - 1; j <= posY + 1; j++) {
                     var nearBox = document.getElementById(i + '-' + j);
                     if (nearBox && nearBox.length != 0) {
                         if (!nearBox.classList.contains('check')) {
                             nearBox.classList.add('check');
-                            leftClick(nearBox);
+                            leftClick(nearBox); // 递归
                         }
                     }
                 }
@@ -211,11 +223,11 @@ function leftClick(dom) {
 }
 
 function rightClick(dom){
-    if(dom.classList.contains('num')){
+    if(dom.classList.contains('num')){ // 表示已经左点击了 
         return;
     }
     dom.classList.toggle('flag');
-    if(dom.classList.contains('isLei') &&dom.classList.contains('flag')){
+    if(dom.classList.contains('isLei') &&dom.classList.contains('flag')){ // 判断是否擦对位置
         mineOver --;
     }
     if(dom.classList.contains('isLei') && !dom.classList.contains('flag')){

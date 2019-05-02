@@ -1,7 +1,13 @@
+/**
+ * core：黑棋value为1，白棋value为2，
+ * 如何检查结束：遍历棋盘，检查横向，纵向，斜上，斜下，
+ * 分别用3&每一个值，3&1=1，3&2=2，3&0=0
+ */
+
 var chess; //棋盘对象
 var grid; //二维数组，记录棋盘点是否有棋子，什么棋子
 var chessWidth = 15; //棋盘格数
-var count = 0; //棋子数，根据棋子数判定当前该是白棋还是黑棋
+var count = 0; //棋子数，根据棋子数判定当前该是白棋还是黑棋，最开始黑棋
 var block = false; //点击时间锁
 
 
@@ -17,7 +23,7 @@ function createGrid(x, y) { //创建棋盘节点div
 }
 
 function checkLine(x, y) { //检查是否横向，纵向，斜上，斜下构成五子
-    var result1 = 3,
+    var result1 = 3, // 为什么是3？11 & 01，11 & 10
         result2 = 3,
         result3 = 3,
         result4 = 3;
@@ -50,7 +56,7 @@ function init() { //初始化方法
     for (var i = 0; i < grid.length; i++) { //初始化二维棋盘
         grid[i] = new Array(chessWidth);
         for (var j = 0; j < grid[i].length; j++) {
-            grid[i][j] = createGrid(j, i);
+            grid[i][j] = createGrid(i, j);
             grid[i][j].onclick = function () { //棋盘节点点击事件
                 if (this.value > 0 || block) { //被锁住时或者已有棋子时直接return
                     return;
@@ -61,9 +67,6 @@ function init() { //初始化方法
                 count += 1; //棋盘棋子数+1
                 var result = checkFinish(); //检查是否结束
                 if (result == 0) { //没结束
-                    if (count % 2 == 1) { //判断
-                        block = false; //关闭锁
-                    }
                     block = false; //关闭锁
                 } else { //结束了
                     setTimeout(function () {
